@@ -1,8 +1,9 @@
 package myDiary;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Entry {
+public class Entry implements Serializable {
     private int id ;
     private String title;
     private  String body;
@@ -18,6 +19,7 @@ public class Entry {
 
     public int getId(){return id;}
     public void setTitle(String title){this.title = title;}
+    public String getTitle(){return title;}
     public void setBody(String body){this.body = body;}
 
     public String toString(){

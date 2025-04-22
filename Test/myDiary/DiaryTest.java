@@ -178,7 +178,7 @@ public class DiaryTest {
         diary.createEntry("title3","body3");
         diary.createEntry("title4","body4");
 
-        assertEquals("2 title2 2025-04-20 body2",diary.findById(2).toString());
+         assertEquals("2 title2 2025-04-20 body2",diary.findById(2).toString());
     }
 
 
@@ -194,7 +194,7 @@ public class DiaryTest {
         diary.createEntry("title4","body4");
         diary.updateEntry(2,"new title","new body");
 
-        assertEquals("2 new title 2025-04-20 new body",diary.findById(2).toString());
+        assertEquals("id: 2, title: new title, date: 2025-04-22, body: new body",diary.findById(2).toString());
 
     }
 

@@ -7,7 +7,8 @@ import java.util.Scanner;
 public class DiaryApp {
 
     public static void main(String[] args) {
-        Diaries diaries = new Diaries();
+
+        Diaries diaries = Diaries.loadFromFile("diaries.ser");
         Scanner entries = new Scanner(System.in);
         System.out.println("Welcome to bebeto diary room");
         boolean repeat = true;
@@ -74,6 +75,7 @@ public class DiaryApp {
                     entries.nextLine();
                      username = entries.nextLine();
                      Diary diary = diaries.findByUsername(username);
+                    password="";
                      if(diary != null) {
                          System.out.println(diaries.findByUsername(username));
                          System.out.println("Enter password to unlock");
@@ -153,7 +155,8 @@ public class DiaryApp {
                                  }
 
                          }
-
+                         diary.lockDiary(password);
+                         System.out.println(diaries.findByUsername(username));
 
 
                      }else {
@@ -171,8 +174,11 @@ public class DiaryApp {
                     password = entries.nextLine();
                     diaries.delete(username,password);
                     num = diaries.getDiaries().size();
+
                     break;
                 case 4:
+
+                    diaries.saveToFile("diaries.ser");
                     System.out.println("Goodbye come with more gist next time");
                     repeat = false;
                     break;

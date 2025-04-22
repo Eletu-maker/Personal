@@ -1,10 +1,10 @@
 package myDiary;
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Diaries {
+public class Diaries implements Serializable {
     private List<Diary> diaries;
 
     public Diaries (){
@@ -37,11 +37,31 @@ public class Diaries {
         Iterator<Diary> iterator = diaries.iterator();
         while (iterator.hasNext()) {
             Diary diary = iterator.next();
-            if (diary.getUsername().equals(username) && diary.getPassword().equals(password)) {
+            if (diary.getUsername().equals(username) && diary.isCorrect(password)) {
                 iterator.remove();
                 break;
             }
         }
     }
 
+
+
+public void saveToFile(String filename) {
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+        out.writeObject(this);
+        System.out.println("Diaries saved to: " + new File(filename).getAbsolutePath());
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+    public static Diaries loadFromFile(String filename) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            return (Diaries) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return new Diaries();
+        }
+    }
 }

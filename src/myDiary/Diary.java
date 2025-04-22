@@ -1,15 +1,16 @@
 package myDiary;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
 
-public class Diary {
+public class Diary implements Serializable {
     private String username;
     private String password;
     private boolean isLocked;
     private List<Entry> entries;
-    private int id;
+    private int counter;
 
 
 
@@ -18,12 +19,13 @@ public class Diary {
         this.password = password;
         this.isLocked = true;
         this.entries = new ArrayList<>();
-        this.id =0;
+        this.counter =0;
 
     }
 
     public String getUsername(){ return username; }
-    public String getPassword(){ return password;}
+
+
     public List<Entry> getEntries(){ return entries;}
 
     public void unlockDiary(String pin){
@@ -44,14 +46,15 @@ public class Diary {
     public void createEntry(String title, String body){
 
        if(!isLocked) {
-           this.id++;
-           Entry entry = new Entry(this.id, title, body);
+           this.counter++;
+           Entry entry = new Entry(this.counter, title, body);
            entries.add(entry);
        }
 
     }
 
     public void deleteById(int id) {
+      /*
         Iterator<Entry> iterator = entries.iterator();
         while (iterator.hasNext()) {
             Entry entry = iterator.next();
@@ -60,6 +63,24 @@ public class Diary {
                 break;
             }
         }
+
+       */
+
+
+        for(Entry entry:entries){
+            if (entry.getId() == id) {
+                entries.remove(entry);
+                break;
+            }
+        }
+        /*
+        for(int count =0; count <entries.size(); count++){
+            if (entries.get(count).getId() == id){
+                entries.remove(entries.get(count));
+            }
+        }
+
+         */
     }
 
     public Entry findById(int id){
@@ -87,4 +108,7 @@ public class Diary {
     }
 
 
+    public boolean isCorrect(String password) {
+        return this.password.equals(password);
+    }
 }
